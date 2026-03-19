@@ -133,6 +133,8 @@ class ThreadCalculatorWindow(QMainWindow):
         self.setWindowTitle(APP_TITLE)
         self.resize(1360, 920)
         self.setMinimumSize(1180, 820)
+        self.resize(1180, 760)
+        self.setMinimumSize(1024, 680)
 
         self.standard = ThreadStandard.METRIC
         self._status_reset_timer = QTimer(self)
@@ -154,6 +156,7 @@ class ThreadCalculatorWindow(QMainWindow):
 
         container = QWidget()
         container.setObjectName("canvas")
+        container = QWidget()
         outer_layout = QVBoxLayout(container)
         outer_layout.setContentsMargins(24, 24, 24, 24)
         outer_layout.setSpacing(18)
@@ -169,6 +172,7 @@ class ThreadCalculatorWindow(QMainWindow):
 
         scroll_area.setWidget(container)
         self.setCentralWidget(scroll_area)
+        self.setCentralWidget(container)
         self.setStatusBar(self._build_status_bar())
         self._build_actions()
 
@@ -261,6 +265,9 @@ class ThreadCalculatorWindow(QMainWindow):
         self.reset_button.setMinimumWidth(92)
         self.copy_button = QPushButton("Copy results")
         self.copy_button.setMinimumWidth(132)
+        self.calculate_button.setObjectName("accentButton")
+        self.reset_button = QPushButton("Reset")
+        self.copy_button = QPushButton("Copy results")
         button_row.addWidget(self.calculate_button)
         button_row.addWidget(self.reset_button)
         button_row.addWidget(self.copy_button)
@@ -292,6 +299,8 @@ class ThreadCalculatorWindow(QMainWindow):
         layout.addWidget(controls_card)
         layout.addWidget(notes_card)
         layout.addStretch(1)
+        layout.addWidget(controls_card)
+        layout.addWidget(notes_card, 1)
         return column
 
     def _build_right_column(self) -> QWidget:
@@ -339,6 +348,8 @@ class ThreadCalculatorWindow(QMainWindow):
         layout.addWidget(summary_card)
         layout.addWidget(detail_card)
         layout.addStretch(1)
+        layout.addWidget(summary_card, 3)
+        layout.addWidget(detail_card, 2)
         return column
 
     def _build_metric_tile(self, title: str, value: str) -> QFrame:
@@ -532,6 +543,10 @@ class ThreadCalculatorWindow(QMainWindow):
             }}
             QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {{
                 height: 0;
+            }}
+                min-height: 210px;
+                padding: 12px;
+                line-height: 1.45;
             }}
             QStatusBar {{
                 background: {PANEL};
