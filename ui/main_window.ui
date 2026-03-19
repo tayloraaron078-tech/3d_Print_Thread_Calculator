@@ -1,0 +1,814 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>ThreadCalculatorMainWindow</class>
+ <widget class="QMainWindow" name="ThreadCalculatorMainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1180</width>
+    <height>760</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>1024</width>
+    <height>680</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Redeemed Thread Calculator</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="rootLayout">
+    <property name="contentsMargins">
+     <left>0</left>
+     <top>0</top>
+     <right>0</right>
+     <bottom>0</bottom>
+    </property>
+    <item>
+     <widget class="QScrollArea" name="mainScrollArea">
+      <property name="frameShape">
+       <enum>QFrame::NoFrame</enum>
+      </property>
+      <property name="widgetResizable">
+       <bool>true</bool>
+      </property>
+      <property name="horizontalScrollBarPolicy">
+       <enum>Qt::ScrollBarAlwaysOff</enum>
+      </property>
+      <widget class="QWidget" name="canvas">
+       <layout class="QVBoxLayout" name="outerLayout">
+        <property name="spacing">
+         <number>18</number>
+        </property>
+        <property name="contentsMargins">
+         <left>24</left>
+         <top>24</top>
+         <right>24</right>
+         <bottom>24</bottom>
+        </property>
+        <item>
+         <widget class="QFrame" name="header">
+          <layout class="QVBoxLayout" name="headerLayout">
+           <property name="spacing">
+            <number>6</number>
+           </property>
+           <property name="contentsMargins">
+            <left>24</left>
+            <top>22</top>
+            <right>24</right>
+            <bottom>22</bottom>
+           </property>
+           <item>
+            <widget class="QLabel" name="appTitle">
+             <property name="text">
+              <string>Redeemed Thread Calculator</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="appSubtitle">
+             <property name="text">
+              <string>Premium-fit sizing guidance for 3D printed metric and unified threads.</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="contentLayout">
+          <property name="spacing">
+           <number>18</number>
+          </property>
+          <item>
+           <widget class="QWidget" name="leftColumn">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <layout class="QVBoxLayout" name="leftColumnLayout">
+             <property name="spacing">
+              <number>18</number>
+             </property>
+             <property name="contentsMargins">
+              <left>0</left>
+              <top>0</top>
+              <right>0</right>
+              <bottom>0</bottom>
+             </property>
+             <item>
+              <widget class="QFrame" name="controlsCard">
+               <layout class="QVBoxLayout" name="controlsCardLayout">
+                <property name="spacing">
+                 <number>16</number>
+                </property>
+                <property name="contentsMargins">
+                 <left>20</left>
+                 <top>20</top>
+                 <right>20</right>
+                 <bottom>20</bottom>
+                </property>
+                <item>
+                 <layout class="QVBoxLayout" name="controlsHeaderLayout">
+                  <property name="spacing">
+                   <number>4</number>
+                  </property>
+                  <item>
+                   <widget class="QLabel" name="controlsCardTitle">
+                    <property name="text">
+                     <string>Inputs &amp; controls</string>
+                    </property>
+                    <property name="objectName">
+                     <string>cardTitle</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="controlsCardDescription">
+                    <property name="text">
+                     <string>Choose a standard, enter the nominal size, and the calculator updates instantly.</string>
+                    </property>
+                    <property name="wordWrap">
+                     <bool>true</bool>
+                    </property>
+                    <property name="objectName">
+                     <string>cardDescription</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <layout class="QGridLayout" name="controlsGrid">
+                  <property name="horizontalSpacing">
+                   <number>12</number>
+                  </property>
+                  <property name="verticalSpacing">
+                   <number>16</number>
+                  </property>
+                  <item row="0" column="0">
+                   <widget class="QWidget" name="standardField">
+                    <layout class="QVBoxLayout" name="standardFieldLayout">
+                     <property name="spacing">
+                      <number>6</number>
+                     </property>
+                     <property name="contentsMargins">
+                      <left>0</left>
+                      <top>0</top>
+                      <right>0</right>
+                      <bottom>0</bottom>
+                     </property>
+                     <item>
+                      <widget class="QLabel" name="standardLabel">
+                       <property name="text">
+                        <string>Thread standard</string>
+                       </property>
+                       <property name="objectName">
+                        <string>fieldLabel</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QComboBox" name="standardCombo">
+                       <property name="minimumSize">
+                        <size>
+                         <width>0</width>
+                         <height>46</height>
+                        </size>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QLabel" name="standardHelper">
+                       <property name="text">
+                        <string>Metric uses diameter + pitch. SAE uses diameter + threads per inch.</string>
+                       </property>
+                       <property name="wordWrap">
+                        <bool>true</bool>
+                       </property>
+                       <property name="objectName">
+                        <string>fieldHelper</string>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
+                   </widget>
+                  </item>
+                  <item row="0" column="1">
+                   <widget class="QWidget" name="presetField">
+                    <layout class="QVBoxLayout" name="presetFieldLayout">
+                     <property name="spacing">
+                      <number>6</number>
+                     </property>
+                     <property name="contentsMargins">
+                      <left>0</left>
+                      <top>0</top>
+                      <right>0</right>
+                      <bottom>0</bottom>
+                     </property>
+                     <item>
+                      <widget class="QLabel" name="presetLabel">
+                       <property name="text">
+                        <string>Quick presets</string>
+                       </property>
+                       <property name="objectName">
+                        <string>fieldLabel</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QComboBox" name="presetCombo">
+                       <property name="minimumSize">
+                        <size>
+                         <width>0</width>
+                         <height>46</height>
+                        </size>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QLabel" name="presetHelper">
+                       <property name="text">
+                        <string>Apply a common starting point, then fine-tune if needed.</string>
+                       </property>
+                       <property name="wordWrap">
+                        <bool>true</bool>
+                       </property>
+                       <property name="objectName">
+                        <string>fieldHelper</string>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
+                   </widget>
+                  </item>
+                  <item row="1" column="0">
+                   <widget class="QWidget" name="diameterField">
+                    <layout class="QVBoxLayout" name="diameterFieldLayout">
+                     <property name="spacing">
+                      <number>6</number>
+                     </property>
+                     <property name="contentsMargins">
+                      <left>0</left>
+                      <top>0</top>
+                      <right>0</right>
+                      <bottom>0</bottom>
+                     </property>
+                     <item>
+                      <widget class="QLabel" name="diameterLabel">
+                       <property name="text">
+                        <string>Nominal diameter (mm)</string>
+                       </property>
+                       <property name="objectName">
+                        <string>fieldLabel</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QLineEdit" name="diameterInput">
+                       <property name="minimumSize">
+                        <size>
+                         <width>0</width>
+                         <height>46</height>
+                        </size>
+                       </property>
+                       <property name="clearButtonEnabled">
+                        <bool>true</bool>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QLabel" name="diameterHelper">
+                       <property name="text">
+                        <string>Positive numeric value for the fastener major diameter.</string>
+                       </property>
+                       <property name="wordWrap">
+                        <bool>true</bool>
+                       </property>
+                       <property name="objectName">
+                        <string>fieldHelper</string>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
+                   </widget>
+                  </item>
+                  <item row="1" column="1">
+                   <widget class="QWidget" name="pitchField">
+                    <layout class="QVBoxLayout" name="pitchFieldLayout">
+                     <property name="spacing">
+                      <number>6</number>
+                     </property>
+                     <property name="contentsMargins">
+                      <left>0</left>
+                      <top>0</top>
+                      <right>0</right>
+                      <bottom>0</bottom>
+                     </property>
+                     <item>
+                      <widget class="QLabel" name="pitchLabel">
+                       <property name="text">
+                        <string>Thread pitch (mm)</string>
+                       </property>
+                       <property name="objectName">
+                        <string>fieldLabel</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QLineEdit" name="pitchInput">
+                       <property name="minimumSize">
+                        <size>
+                         <width>0</width>
+                         <height>46</height>
+                        </size>
+                       </property>
+                       <property name="clearButtonEnabled">
+                        <bool>true</bool>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QLabel" name="pitchHelper">
+                       <property name="text">
+                        <string>Distance between threads for metric, or TPI for unified threads.</string>
+                       </property>
+                       <property name="wordWrap">
+                        <bool>true</bool>
+                       </property>
+                       <property name="objectName">
+                        <string>fieldHelper</string>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="buttonRow">
+                  <property name="spacing">
+                   <number>10</number>
+                  </property>
+                  <item>
+                   <widget class="QPushButton" name="calculateButton">
+                    <property name="minimumSize">
+                     <size>
+                      <width>132</width>
+                      <height>44</height>
+                     </size>
+                    </property>
+                    <property name="text">
+                     <string>Calculate</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QPushButton" name="resetButton">
+                    <property name="minimumSize">
+                     <size>
+                      <width>92</width>
+                      <height>44</height>
+                     </size>
+                    </property>
+                    <property name="text">
+                     <string>Reset</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QPushButton" name="copyButton">
+                    <property name="minimumSize">
+                     <size>
+                      <width>132</width>
+                      <height>44</height>
+                     </size>
+                    </property>
+                    <property name="text">
+                     <string>Copy results</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <spacer name="buttonSpacer">
+                    <property name="orientation">
+                     <enum>Qt::Horizontal</enum>
+                    </property>
+                    <property name="sizeHint" stdset="0">
+                     <size>
+                      <width>40</width>
+                      <height>20</height>
+                     </size>
+                    </property>
+                   </spacer>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <widget class="QLabel" name="inlineStatus">
+                  <property name="text">
+                   <string>Ready for input.</string>
+                  </property>
+                  <property name="wordWrap">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </item>
+             <item>
+              <widget class="QFrame" name="notesCard">
+               <layout class="QVBoxLayout" name="notesCardLayout">
+                <property name="spacing">
+                 <number>16</number>
+                </property>
+                <property name="contentsMargins">
+                 <left>20</left>
+                 <top>20</top>
+                 <right>20</right>
+                 <bottom>20</bottom>
+                </property>
+                <item>
+                 <layout class="QVBoxLayout" name="notesHeaderLayout">
+                  <property name="spacing">
+                   <number>4</number>
+                  </property>
+                  <item>
+                   <widget class="QLabel" name="notesCardTitle">
+                    <property name="text">
+                     <string>Engineering notes</string>
+                    </property>
+                    <property name="objectName">
+                     <string>cardTitle</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="notesCardDescription">
+                    <property name="text">
+                     <string>These settings are intended as reliable starting dimensions for FDM/CAD workflows.</string>
+                    </property>
+                    <property name="wordWrap">
+                     <bool>true</bool>
+                    </property>
+                    <property name="objectName">
+                     <string>cardDescription</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <widget class="QTextEdit" name="notesBox">
+                  <property name="readOnly">
+                   <bool>true</bool>
+                  </property>
+                  <property name="html">
+                   <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans Serif'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:8px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;• Thread tool: use a metric tap for internal threads and a die profile for external threads.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:8px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;• Method: cut thread geometry rather than cosmetic representations.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:8px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;• Chamfer: add a 45° lead-in, ideally at least 1.0 mm long.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:8px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;• Walls: target 4–6 perimeters for strength and clean thread form.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:8px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;• Orientation: print vertically when possible to maintain circularity.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:8px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;• The calculator values are optimized as practical starting points for test fits.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;• Originally tuned around SolidWorks-style modeling, but portable to other CAD packages.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </item>
+             <item>
+              <spacer name="leftColumnSpacer">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>40</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <widget class="QWidget" name="rightColumn">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <layout class="QVBoxLayout" name="rightColumnLayout">
+             <property name="spacing">
+              <number>18</number>
+             </property>
+             <property name="contentsMargins">
+              <left>0</left>
+              <top>0</top>
+              <right>0</right>
+              <bottom>0</bottom>
+             </property>
+             <item>
+              <widget class="QFrame" name="summaryCard">
+               <layout class="QVBoxLayout" name="summaryCardLayout">
+                <property name="spacing">
+                 <number>16</number>
+                </property>
+                <property name="contentsMargins">
+                 <left>20</left>
+                 <top>20</top>
+                 <right>20</right>
+                 <bottom>20</bottom>
+                </property>
+                <item>
+                 <layout class="QVBoxLayout" name="summaryHeaderLayout">
+                  <property name="spacing">
+                   <number>4</number>
+                  </property>
+                  <item>
+                   <widget class="QLabel" name="summaryCardTitle">
+                    <property name="text">
+                     <string>Calculated results</string>
+                    </property>
+                    <property name="objectName">
+                     <string>cardTitle</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="summaryCardDescription">
+                    <property name="text">
+                     <string>All outputs update automatically and are formatted for direct use in CAD or slicer setup.</string>
+                    </property>
+                    <property name="wordWrap">
+                     <bool>true</bool>
+                    </property>
+                    <property name="objectName">
+                     <string>cardDescription</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <widget class="QFrame" name="standardTapDrillRow">
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>118</height>
+                   </size>
+                  </property>
+                  <layout class="QVBoxLayout" name="standardTapDrillRowLayout">
+                   <property name="spacing">
+                    <number>2</number>
+                   </property>
+                   <property name="contentsMargins">
+                    <left>18</left>
+                    <top>16</top>
+                    <right>18</right>
+                    <bottom>16</bottom>
+                   </property>
+                   <item>
+                    <widget class="QLabel" name="titleLabel">
+                     <property name="text">
+                      <string>Recommended tap drill</string>
+                     </property>
+                     <property name="objectName">
+                      <string>resultTitle</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="valueLabel">
+                     <property name="text">
+                      <string>—</string>
+                     </property>
+                     <property name="objectName">
+                      <string>resultValue</string>
+                     </property>
+                     <property name="textInteractionFlags">
+                      <set>Qt::TextSelectableByMouse</set>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="detailLabel">
+                     <property name="text">
+                      <string>Awaiting valid inputs</string>
+                     </property>
+                     <property name="wordWrap">
+                      <bool>true</bool>
+                     </property>
+                     <property name="objectName">
+                      <string>resultDetail</string>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QFrame" name="printHoleRow">
+                  <property name="minimumSize">
+                   <size><width>0</width><height>118</height></size>
+                  </property>
+                  <layout class="QVBoxLayout" name="printHoleRowLayout">
+                   <property name="spacing"><number>2</number></property>
+                   <property name="contentsMargins"><left>18</left><top>16</top><right>18</right><bottom>16</bottom></property>
+                   <item><widget class="QLabel" name="titleLabel"><property name="text"><string>3D print hole diameter</string></property><property name="objectName"><string>resultTitle</string></property></widget></item>
+                   <item><widget class="QLabel" name="valueLabel"><property name="text"><string>—</string></property><property name="objectName"><string>resultValue</string></property><property name="textInteractionFlags"><set>Qt::TextSelectableByMouse</set></property></widget></item>
+                   <item><widget class="QLabel" name="detailLabel"><property name="text"><string>Awaiting valid inputs</string></property><property name="wordWrap"><bool>true</bool></property><property name="objectName"><string>resultDetail</string></property></widget></item>
+                  </layout>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QFrame" name="theoreticalBoltRow">
+                  <property name="minimumSize"><size><width>0</width><height>118</height></size></property>
+                  <layout class="QVBoxLayout" name="theoreticalBoltRowLayout">
+                   <property name="spacing"><number>2</number></property>
+                   <property name="contentsMargins"><left>18</left><top>16</top><right>18</right><bottom>16</bottom></property>
+                   <item><widget class="QLabel" name="titleLabel"><property name="text"><string>Theoretical bolt major diameter</string></property><property name="objectName"><string>resultTitle</string></property></widget></item>
+                   <item><widget class="QLabel" name="valueLabel"><property name="text"><string>—</string></property><property name="objectName"><string>resultValue</string></property><property name="textInteractionFlags"><set>Qt::TextSelectableByMouse</set></property></widget></item>
+                   <item><widget class="QLabel" name="detailLabel"><property name="text"><string>Awaiting valid inputs</string></property><property name="wordWrap"><bool>true</bool></property><property name="objectName"><string>resultDetail</string></property></widget></item>
+                  </layout>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QFrame" name="printBoltRow">
+                  <property name="minimumSize"><size><width>0</width><height>118</height></size></property>
+                  <layout class="QVBoxLayout" name="printBoltRowLayout">
+                   <property name="spacing"><number>2</number></property>
+                   <property name="contentsMargins"><left>18</left><top>16</top><right>18</right><bottom>16</bottom></property>
+                   <item><widget class="QLabel" name="titleLabel"><property name="text"><string>Recommended print bolt diameter</string></property><property name="objectName"><string>resultTitle</string></property></widget></item>
+                   <item><widget class="QLabel" name="valueLabel"><property name="text"><string>—</string></property><property name="objectName"><string>resultValue</string></property><property name="textInteractionFlags"><set>Qt::TextSelectableByMouse</set></property></widget></item>
+                   <item><widget class="QLabel" name="detailLabel"><property name="text"><string>Awaiting valid inputs</string></property><property name="wordWrap"><bool>true</bool></property><property name="objectName"><string>resultDetail</string></property></widget></item>
+                  </layout>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QFrame" name="layerRangeRow">
+                  <property name="minimumSize"><size><width>0</width><height>118</height></size></property>
+                  <layout class="QVBoxLayout" name="layerRangeRowLayout">
+                   <property name="spacing"><number>2</number></property>
+                   <property name="contentsMargins"><left>18</left><top>16</top><right>18</right><bottom>16</bottom></property>
+                   <item><widget class="QLabel" name="titleLabel"><property name="text"><string>Suggested layer height range</string></property><property name="objectName"><string>resultTitle</string></property></widget></item>
+                   <item><widget class="QLabel" name="valueLabel"><property name="text"><string>—</string></property><property name="objectName"><string>resultValue</string></property><property name="textInteractionFlags"><set>Qt::TextSelectableByMouse</set></property></widget></item>
+                   <item><widget class="QLabel" name="detailLabel"><property name="text"><string>Awaiting valid inputs</string></property><property name="wordWrap"><bool>true</bool></property><property name="objectName"><string>resultDetail</string></property></widget></item>
+                  </layout>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLabel" name="emptyState">
+                  <property name="text">
+                   <string>Enter dimensions on the left to generate production-ready thread sizing guidance.</string>
+                  </property>
+                  <property name="wordWrap">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </item>
+             <item>
+              <widget class="QFrame" name="detailCard">
+               <layout class="QVBoxLayout" name="detailCardLayout">
+                <property name="spacing">
+                 <number>16</number>
+                </property>
+                <property name="contentsMargins">
+                 <left>20</left>
+                 <top>20</top>
+                 <right>20</right>
+                 <bottom>20</bottom>
+                </property>
+                <item>
+                 <layout class="QVBoxLayout" name="detailHeaderLayout">
+                  <property name="spacing">
+                   <number>4</number>
+                  </property>
+                  <item>
+                   <widget class="QLabel" name="detailCardTitle">
+                    <property name="text">
+                     <string>Fit guidance</string>
+                    </property>
+                    <property name="objectName">
+                     <string>cardTitle</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="detailCardDescription">
+                    <property name="text">
+                     <string>Use the highlighted values as a baseline, then fine-tune for your material, printer, and tolerance preference.</string>
+                    </property>
+                    <property name="wordWrap">
+                     <bool>true</bool>
+                    </property>
+                    <property name="objectName">
+                     <string>cardDescription</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <layout class="QGridLayout" name="detailGrid">
+                  <property name="horizontalSpacing">
+                   <number>16</number>
+                  </property>
+                  <property name="verticalSpacing">
+                   <number>16</number>
+                  </property>
+                  <item row="0" column="0">
+                   <widget class="QFrame" name="summaryStandardTile">
+                    <property name="minimumSize"><size><width>0</width><height>112</height></size></property>
+                    <layout class="QVBoxLayout" name="summaryStandardTileLayout">
+                     <property name="spacing"><number>4</number></property>
+                     <property name="contentsMargins"><left>16</left><top>16</top><right>16</right><bottom>16</bottom></property>
+                     <item><widget class="QLabel" name="titleLabel"><property name="text"><string>Current standard</string></property><property name="objectName"><string>metricTileTitle</string></property></widget></item>
+                     <item><widget class="QLabel" name="valueLabel"><property name="text"><string>Metric</string></property><property name="objectName"><string>metricTileValue</string></property></widget></item>
+                    </layout>
+                   </widget>
+                  </item>
+                  <item row="0" column="1">
+                   <widget class="QFrame" name="summaryInputTile">
+                    <property name="minimumSize"><size><width>0</width><height>112</height></size></property>
+                    <layout class="QVBoxLayout" name="summaryInputTileLayout">
+                     <property name="spacing"><number>4</number></property>
+                     <property name="contentsMargins"><left>16</left><top>16</top><right>16</right><bottom>16</bottom></property>
+                     <item><widget class="QLabel" name="titleLabel"><property name="text"><string>Input size</string></property><property name="objectName"><string>metricTileTitle</string></property></widget></item>
+                     <item><widget class="QLabel" name="valueLabel"><property name="text"><string>M8 × 1.25</string></property><property name="objectName"><string>metricTileValue</string></property></widget></item>
+                    </layout>
+                   </widget>
+                  </item>
+                  <item row="1" column="0">
+                   <widget class="QFrame" name="summaryUnitsTile">
+                    <property name="minimumSize"><size><width>0</width><height>112</height></size></property>
+                    <layout class="QVBoxLayout" name="summaryUnitsTileLayout">
+                     <property name="spacing"><number>4</number></property>
+                     <property name="contentsMargins"><left>16</left><top>16</top><right>16</right><bottom>16</bottom></property>
+                     <item><widget class="QLabel" name="titleLabel"><property name="text"><string>Output units</string></property><property name="objectName"><string>metricTileTitle</string></property></widget></item>
+                     <item><widget class="QLabel" name="valueLabel"><property name="text"><string>mm</string></property><property name="objectName"><string>metricTileValue</string></property></widget></item>
+                    </layout>
+                   </widget>
+                  </item>
+                  <item row="1" column="1">
+                   <widget class="QFrame" name="summaryClearanceTile">
+                    <property name="minimumSize"><size><width>0</width><height>112</height></size></property>
+                    <layout class="QVBoxLayout" name="summaryClearanceTileLayout">
+                     <property name="spacing"><number>4</number></property>
+                     <property name="contentsMargins"><left>16</left><top>16</top><right>16</right><bottom>16</bottom></property>
+                     <item><widget class="QLabel" name="titleLabel"><property name="text"><string>Thread fit note</string></property><property name="objectName"><string>metricTileTitle</string></property></widget></item>
+                     <item><widget class="QLabel" name="valueLabel"><property name="text"><string>Balanced</string></property><property name="objectName"><string>metricTileValue</string></property></widget></item>
+                    </layout>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+               </layout>
+              </widget>
+             </item>
+             <item>
+              <spacer name="rightColumnSpacer">
+               <property name="orientation"><enum>Qt::Vertical</enum></property>
+               <property name="sizeHint" stdset="0"><size><width>20</width><height>40</height></size></property>
+              </spacer>
+             </item>
+            </layout>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QStatusBar" name="statusbar">
+   <property name="sizeGripEnabled">
+    <bool>false</bool>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

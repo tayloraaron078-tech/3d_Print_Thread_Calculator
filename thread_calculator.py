@@ -4,26 +4,12 @@ from __future__ import annotations
 
 import sys
 from dataclasses import dataclass
+from pathlib import Path
 
-from PySide6.QtCore import QTimer, Qt
+from PySide6.QtCore import QIODevice, QFile, QTimer
 from PySide6.QtGui import QAction, QClipboard, QDoubleValidator, QFont, QFontDatabase
-from PySide6.QtWidgets import (
-    QApplication,
-    QComboBox,
-    QFrame,
-    QGridLayout,
-    QHBoxLayout,
-    QLabel,
-    QLineEdit,
-    QMainWindow,
-    QPushButton,
-    QScrollArea,
-    QSizePolicy,
-    QStatusBar,
-    QTextEdit,
-    QVBoxLayout,
-    QWidget,
-)
+from PySide6.QtUiTools import QUiLoader
+from PySide6.QtWidgets import QApplication, QComboBox, QFrame, QLabel, QLineEdit, QMainWindow, QPushButton, QTextEdit, QWidget
 
 from thread_logic import COMMON_PRESETS, ThreadCalculation, ThreadInput, ThreadStandard, calculate_thread_values, parse_thread_inputs
 
@@ -39,6 +25,7 @@ MUTED = "#9BA9C0"
 SUCCESS = "#5FD1A3"
 WARNING = "#FFBF69"
 ERROR = "#FF7B88"
+UI_FILE = Path(__file__).resolve().parent / "ui" / "main_window.ui"
 
 
 @dataclass(frozen=True)
@@ -48,51 +35,12 @@ class DisplayValue:
     detail: str
 
 
-class CardFrame(QFrame):
-    def __init__(self, title: str = "", description: str = "", parent: QWidget | None = None) -> None:
-        super().__init__(parent)
-        self.setObjectName("card")
-        layout = QVBoxLayout(self)
-        layout.setContentsMargins(20, 20, 20, 20)
-        layout.setSpacing(16)
-
-        if title:
-            header = QVBoxLayout()
-            header.setSpacing(4)
-
-            title_label = QLabel(title)
-            title_label.setObjectName("cardTitle")
-            header.addWidget(title_label)
-
-            if description:
-                description_label = QLabel(description)
-                description_label.setObjectName("cardDescription")
-                description_label.setWordWrap(True)
-                header.addWidget(description_label)
-
-            layout.addLayout(header)
-
-        self.content_layout = layout
-
-
-class LabeledInput(QWidget):
-    def __init__(self, label_text: str, helper_text: str, parent: QWidget | None = None) -> None:
-        super().__init__(parent)
-        self.label = QLabel(label_text)
-        self.label.setObjectName("fieldLabel")
-        self.helper = QLabel(helper_text)
-        self.helper.setObjectName("fieldHelper")
-        self.helper.setWordWrap(True)
-        self.input = QLineEdit()
-        self.input.setMinimumHeight(46)
-        self.input.setClearButtonEnabled(True)
-
-        layout = QVBoxLayout(self)
-        layout.setContentsMargins(0, 0, 0, 0)
-        layout.setSpacing(6)
-        layout.addWidget(self.label)
-        layout.addWidget(self.input)
-        layout.addWidget(self.helper)
+@dataclass(frozen=True)
+class FieldBinding:
+    container: QWidget
+    label: QLabel
+    input: QLineEdit
+    helper: QLabel
 
     def set_error_state(self, has_error: bool) -> None:
         self.input.setProperty("invalid", has_error)
@@ -100,26 +48,12 @@ class LabeledInput(QWidget):
         self.input.style().polish(self.input)
 
 
-class ResultRow(QFrame):
-    def __init__(self, title: str, parent: QWidget | None = None) -> None:
-        super().__init__(parent)
-        self.setObjectName("resultRow")
-        self.title_label = QLabel(title)
-        self.title_label.setObjectName("resultTitle")
-        self.value_label = QLabel("—")
-        self.value_label.setObjectName("resultValue")
-        self.value_label.setTextInteractionFlags(Qt.TextSelectableByMouse)
-        self.setMinimumHeight(118)
-        self.detail_label = QLabel("Awaiting valid inputs")
-        self.detail_label.setObjectName("resultDetail")
-        self.detail_label.setWordWrap(True)
-
-        layout = QVBoxLayout(self)
-        layout.setContentsMargins(18, 16, 18, 16)
-        layout.setSpacing(2)
-        layout.addWidget(self.title_label)
-        layout.addWidget(self.value_label)
-        layout.addWidget(self.detail_label)
+@dataclass(frozen=True)
+class ResultRowBinding:
+    frame: QFrame
+    title_label: QLabel
+    value_label: QLabel
+    detail_label: QLabel
 
     def update_value(self, value: DisplayValue) -> None:
         self.title_label.setText(value.title)
@@ -127,256 +61,137 @@ class ResultRow(QFrame):
         self.detail_label.setText(value.detail)
 
 
+@dataclass(frozen=True)
+class MetricTileBinding:
+    frame: QFrame
+    title_label: QLabel
+    value_label: QLabel
+
+
 class ThreadCalculatorWindow(QMainWindow):
     def __init__(self) -> None:
         super().__init__()
-        self.setWindowTitle(APP_TITLE)
-        self.resize(1360, 920)
-        self.setMinimumSize(1180, 820)
-        self.resize(1180, 760)
-        self.setMinimumSize(1024, 680)
-
         self.standard = ThreadStandard.METRIC
         self._status_reset_timer = QTimer(self)
         self._status_reset_timer.setSingleShot(True)
         self._status_reset_timer.timeout.connect(self._restore_ready_status)
 
-        self._build_ui()
+        self._load_ui()
+        self._bind_widgets()
+        self._populate_static_data()
         self._apply_fonts()
         self._apply_theme()
+        self._build_actions()
         self._connect_signals()
         self._load_defaults_for_standard(self.standard)
         self.recalculate(show_success=False)
 
-    def _build_ui(self) -> None:
-        scroll_area = QScrollArea()
-        scroll_area.setWidgetResizable(True)
-        scroll_area.setFrameShape(QFrame.NoFrame)
-        scroll_area.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+    def _load_ui(self) -> None:
+        ui_file = QFile(str(UI_FILE))
+        if not ui_file.open(QIODevice.ReadOnly):
+            raise RuntimeError(f"Unable to open UI file: {UI_FILE}")
 
-        container = QWidget()
-        container.setObjectName("canvas")
-        container = QWidget()
-        outer_layout = QVBoxLayout(container)
-        outer_layout.setContentsMargins(24, 24, 24, 24)
-        outer_layout.setSpacing(18)
+        loader = QUiLoader()
+        loaded_window = loader.load(ui_file, self)
+        ui_file.close()
 
-        outer_layout.addWidget(self._build_header())
+        if loaded_window is None:
+            raise RuntimeError(f"Unable to load UI file: {UI_FILE}")
+        if not isinstance(loaded_window, QMainWindow):
+            raise RuntimeError(f"UI root must be a QMainWindow: {UI_FILE}")
 
-        content_layout = QHBoxLayout()
-        content_layout.setSpacing(18)
-        content_layout.setAlignment(Qt.AlignTop)
-        content_layout.addWidget(self._build_left_column(), 5)
-        content_layout.addWidget(self._build_right_column(), 6)
-        outer_layout.addLayout(content_layout, 1)
+        self.setWindowTitle(loaded_window.windowTitle())
+        self.resize(loaded_window.size())
+        self.setMinimumSize(loaded_window.minimumSize())
+        self.setCentralWidget(loaded_window.takeCentralWidget())
+        self.setStatusBar(loaded_window.statusBar())
+        loaded_window.deleteLater()
 
-        scroll_area.setWidget(container)
-        self.setCentralWidget(scroll_area)
-        self.setCentralWidget(container)
-        self.setStatusBar(self._build_status_bar())
-        self._build_actions()
+    def _bind_widgets(self) -> None:
+        self.standard_combo = self._require_child(QComboBox, "standardCombo")
+        self.preset_combo = self._require_child(QComboBox, "presetCombo")
+        self.calculate_button = self._require_child(QPushButton, "calculateButton")
+        self.reset_button = self._require_child(QPushButton, "resetButton")
+        self.copy_button = self._require_child(QPushButton, "copyButton")
+        self.inline_status = self._require_child(QLabel, "inlineStatus")
+        self.empty_state_label = self._require_child(QLabel, "emptyState")
+        self.notes_box = self._require_child(QTextEdit, "notesBox")
 
-    def _build_header(self) -> QWidget:
-        header = QFrame()
-        header.setObjectName("header")
-        layout = QVBoxLayout(header)
-        layout.setContentsMargins(24, 22, 24, 22)
-        layout.setSpacing(6)
+        self.diameter_input = self._bind_field("diameterField", "diameterLabel", "diameterInput", "diameterHelper")
+        self.pitch_input = self._bind_field("pitchField", "pitchLabel", "pitchInput", "pitchHelper")
 
-        title = QLabel(APP_TITLE)
-        title.setObjectName("appTitle")
-        subtitle = QLabel(APP_SUBTITLE)
-        subtitle.setObjectName("appSubtitle")
-        subtitle.setWordWrap(True)
-
-        layout.addWidget(title)
-        layout.addWidget(subtitle)
-        return header
-
-    def _build_left_column(self) -> QWidget:
-        column = QWidget()
-        column.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Maximum)
-        layout = QVBoxLayout(column)
-        layout.setContentsMargins(0, 0, 0, 0)
-        layout.setSpacing(18)
-
-        controls_card = CardFrame("Inputs & controls", "Choose a standard, enter the nominal size, and the calculator updates instantly.")
-        controls_grid = QGridLayout()
-        controls_grid.setHorizontalSpacing(12)
-        controls_grid.setVerticalSpacing(16)
-
-        standard_box = QWidget()
-        standard_layout = QVBoxLayout(standard_box)
-        standard_layout.setContentsMargins(0, 0, 0, 0)
-        standard_layout.setSpacing(6)
-        standard_label = QLabel("Thread standard")
-        standard_label.setObjectName("fieldLabel")
-        self.standard_combo = QComboBox()
-        self.standard_combo.setMinimumHeight(46)
-        self.standard_combo.addItems([ThreadStandard.METRIC.value, ThreadStandard.SAE.value])
-        standard_helper = QLabel("Metric uses diameter + pitch. SAE uses diameter + threads per inch.")
-        standard_helper.setObjectName("fieldHelper")
-        standard_helper.setWordWrap(True)
-        standard_layout.addWidget(standard_label)
-        standard_layout.addWidget(self.standard_combo)
-        standard_layout.addWidget(standard_helper)
-
-        preset_box = QWidget()
-        preset_layout = QVBoxLayout(preset_box)
-        preset_layout.setContentsMargins(0, 0, 0, 0)
-        preset_layout.setSpacing(6)
-        preset_label = QLabel("Quick presets")
-        preset_label.setObjectName("fieldLabel")
-        self.preset_combo = QComboBox()
-        self.preset_combo.setMinimumHeight(46)
-        self.preset_combo.addItem("Custom")
-        for preset in COMMON_PRESETS:
-            self.preset_combo.addItem(preset.name, preset)
-        preset_helper = QLabel("Apply a common starting point, then fine-tune if needed.")
-        preset_helper.setObjectName("fieldHelper")
-        preset_helper.setWordWrap(True)
-        preset_layout.addWidget(preset_label)
-        preset_layout.addWidget(self.preset_combo)
-        preset_layout.addWidget(preset_helper)
-
-        self.diameter_input = LabeledInput("Nominal diameter (mm)", "Positive numeric value for the fastener major diameter.")
-        self.pitch_input = LabeledInput("Thread pitch (mm)", "Distance between threads for metric, or TPI for unified threads.")
-
-        validator = QDoubleValidator(bottom=0.0001, top=9999.0, decimals=6)
-        validator.setNotation(QDoubleValidator.StandardNotation)
-        self.diameter_input.input.setValidator(validator)
-        self.pitch_input.input.setValidator(QDoubleValidator(bottom=0.0001, top=9999.0, decimals=6))
-
-        controls_grid.addWidget(standard_box, 0, 0)
-        controls_grid.addWidget(preset_box, 0, 1)
-        controls_grid.addWidget(self.diameter_input, 1, 0)
-        controls_grid.addWidget(self.pitch_input, 1, 1)
-        controls_grid.setColumnStretch(0, 1)
-        controls_grid.setColumnStretch(1, 1)
-
-        controls_card.content_layout.addLayout(controls_grid)
-
-        button_row = QHBoxLayout()
-        button_row.setSpacing(10)
-        self.calculate_button = QPushButton("Calculate")
-        self.calculate_button.setMinimumWidth(132)
-        self.calculate_button.setObjectName("accentButton")
-        self.reset_button = QPushButton("Reset")
-        self.reset_button.setMinimumWidth(92)
-        self.copy_button = QPushButton("Copy results")
-        self.copy_button.setMinimumWidth(132)
-        self.calculate_button.setObjectName("accentButton")
-        self.reset_button = QPushButton("Reset")
-        self.copy_button = QPushButton("Copy results")
-        button_row.addWidget(self.calculate_button)
-        button_row.addWidget(self.reset_button)
-        button_row.addWidget(self.copy_button)
-        button_row.addStretch(1)
-        controls_card.content_layout.addLayout(button_row)
-
-        self.inline_status = QLabel("Ready for input.")
-        self.inline_status.setObjectName("inlineStatus")
-        self.inline_status.setWordWrap(True)
-        controls_card.content_layout.addWidget(self.inline_status)
-
-        notes_card = CardFrame("Engineering notes", "These settings are intended as reliable starting dimensions for FDM/CAD workflows.")
-        notes = QTextEdit()
-        notes.setObjectName("notesBox")
-        notes.setReadOnly(True)
-        notes.setText(
-            "• Thread tool: use a metric tap for internal threads and a die profile for external threads.\n"
-            "• Method: cut thread geometry rather than cosmetic representations.\n"
-            "• Chamfer: add a 45° lead-in, ideally at least 1.0 mm long.\n"
-            "• Walls: target 4–6 perimeters for strength and clean thread form.\n"
-            "• Orientation: print vertically when possible to maintain circularity.\n"
-            "• The calculator values are optimized as practical starting points for test fits.\n"
-            "• Originally tuned around SolidWorks-style modeling, but portable to other CAD packages."
-        )
-        notes_card.content_layout.addWidget(notes)
-
-        controls_card.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Maximum)
-        notes_card.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Maximum)
-        layout.addWidget(controls_card)
-        layout.addWidget(notes_card)
-        layout.addStretch(1)
-        layout.addWidget(controls_card)
-        layout.addWidget(notes_card, 1)
-        return column
-
-    def _build_right_column(self) -> QWidget:
-        column = QWidget()
-        column.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Maximum)
-        layout = QVBoxLayout(column)
-        layout.setContentsMargins(0, 0, 0, 0)
-        layout.setSpacing(18)
-
-        summary_card = CardFrame("Calculated results", "All outputs update automatically and are formatted for direct use in CAD or slicer setup.")
         self.result_rows = {
-            "standard_tap_drill": ResultRow("Recommended tap drill"),
-            "print_hole": ResultRow("3D print hole diameter"),
-            "theoretical_bolt": ResultRow("Theoretical bolt major diameter"),
-            "print_bolt": ResultRow("Recommended print bolt diameter"),
-            "layer_range": ResultRow("Suggested layer height range"),
+            "standard_tap_drill": self._bind_result_row("standardTapDrillRow"),
+            "print_hole": self._bind_result_row("printHoleRow"),
+            "theoretical_bolt": self._bind_result_row("theoreticalBoltRow"),
+            "print_bolt": self._bind_result_row("printBoltRow"),
+            "layer_range": self._bind_result_row("layerRangeRow"),
         }
-        for row in self.result_rows.values():
-            summary_card.content_layout.addWidget(row)
 
-        empty_state = QLabel("Enter dimensions on the left to generate production-ready thread sizing guidance.")
-        empty_state.setObjectName("emptyState")
-        empty_state.setWordWrap(True)
-        summary_card.content_layout.addWidget(empty_state)
-        self.empty_state_label = empty_state
+        self.summary_standard = self._bind_metric_tile("summaryStandardTile")
+        self.summary_input = self._bind_metric_tile("summaryInputTile")
+        self.summary_units = self._bind_metric_tile("summaryUnitsTile")
+        self.summary_clearance = self._bind_metric_tile("summaryClearanceTile")
 
-        detail_card = CardFrame("Fit guidance", "Use the highlighted values as a baseline, then fine-tune for your material, printer, and tolerance preference.")
-        detail_grid = QGridLayout()
-        detail_grid.setHorizontalSpacing(16)
-        detail_grid.setVerticalSpacing(16)
-
-        self.summary_standard = self._build_metric_tile("Current standard", "Metric")
-        self.summary_input = self._build_metric_tile("Input size", "M8 × 1.25")
-        self.summary_units = self._build_metric_tile("Output units", "mm")
-        self.summary_clearance = self._build_metric_tile("Thread fit note", "Balanced")
-
-        tiles = [self.summary_standard, self.summary_input, self.summary_units, self.summary_clearance]
-        for index, tile in enumerate(tiles):
-            detail_grid.addWidget(tile, index // 2, index % 2)
-
-        detail_card.content_layout.addLayout(detail_grid)
-
-        summary_card.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Maximum)
-        detail_card.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Maximum)
-        layout.addWidget(summary_card)
-        layout.addWidget(detail_card)
-        layout.addStretch(1)
-        layout.addWidget(summary_card, 3)
-        layout.addWidget(detail_card, 2)
-        return column
-
-    def _build_metric_tile(self, title: str, value: str) -> QFrame:
-        tile = QFrame()
-        tile.setObjectName("metricTile")
-        tile_layout = QVBoxLayout(tile)
-        tile_layout.setContentsMargins(16, 16, 16, 16)
-        tile_layout.setSpacing(4)
-
-        title_label = QLabel(title)
-        title_label.setObjectName("metricTileTitle")
-        value_label = QLabel(value)
-        value_label.setObjectName("metricTileValue")
-
-        tile.setMinimumHeight(112)
-        tile_layout.addWidget(title_label)
-        tile_layout.addWidget(value_label)
-        tile.value_label = value_label  # type: ignore[attr-defined]
-        return tile
-
-    def _build_status_bar(self) -> QStatusBar:
-        status_bar = QStatusBar()
-        status_bar.setSizeGripEnabled(False)
+        status_bar = self.statusBar()
         self.status_label = QLabel("Ready.")
         self.status_label.setObjectName("statusBarLabel")
         status_bar.addWidget(self.status_label, 1)
-        return status_bar
+
+    def _populate_static_data(self) -> None:
+        self._require_child(QLabel, "appTitle").setText(APP_TITLE)
+        self._require_child(QLabel, "appSubtitle").setText(APP_SUBTITLE)
+
+        self.standard_combo.clear()
+        self.standard_combo.addItems([ThreadStandard.METRIC.value, ThreadStandard.SAE.value])
+
+        self.preset_combo.clear()
+        self.preset_combo.addItem("Custom")
+        for preset in COMMON_PRESETS:
+            self.preset_combo.addItem(preset.name, preset)
+
+        validator = QDoubleValidator(bottom=0.0001, top=9999.0, decimals=6, parent=self)
+        validator.setNotation(QDoubleValidator.StandardNotation)
+        self.diameter_input.input.setValidator(validator)
+        self.pitch_input.input.setValidator(QDoubleValidator(bottom=0.0001, top=9999.0, decimals=6, parent=self))
+
+    def _require_child(self, widget_type: type[QWidget], name: str) -> QWidget:
+        widget = self.findChild(widget_type, name)
+        if widget is None:
+            raise RuntimeError(f"Missing required widget '{name}' in {UI_FILE}")
+        return widget
+
+    def _require_descendant(self, parent: QWidget, widget_type: type[QWidget], name: str) -> QWidget:
+        widget = parent.findChild(widget_type, name)
+        if widget is None:
+            raise RuntimeError(f"Missing required widget '{name}' in {UI_FILE}")
+        return widget
+
+    def _bind_field(self, container_name: str, label_name: str, input_name: str, helper_name: str) -> FieldBinding:
+        container = self._require_child(QWidget, container_name)
+        return FieldBinding(
+            container=container,
+            label=self._require_descendant(container, QLabel, label_name),
+            input=self._require_descendant(container, QLineEdit, input_name),
+            helper=self._require_descendant(container, QLabel, helper_name),
+        )
+
+    def _bind_result_row(self, frame_name: str) -> ResultRowBinding:
+        frame = self._require_child(QFrame, frame_name)
+        return ResultRowBinding(
+            frame=frame,
+            title_label=self._require_descendant(frame, QLabel, "titleLabel"),
+            value_label=self._require_descendant(frame, QLabel, "valueLabel"),
+            detail_label=self._require_descendant(frame, QLabel, "detailLabel"),
+        )
+
+    def _bind_metric_tile(self, frame_name: str) -> MetricTileBinding:
+        frame = self._require_child(QFrame, frame_name)
+        return MetricTileBinding(
+            frame=frame,
+            title_label=self._require_descendant(frame, QLabel, "titleLabel"),
+            value_label=self._require_descendant(frame, QLabel, "valueLabel"),
+        )
 
     def _build_actions(self) -> None:
         copy_action = QAction("Copy Results", self)
@@ -413,7 +228,7 @@ class ThreadCalculatorWindow(QMainWindow):
                 border: 1px solid {BORDER};
                 border-radius: 20px;
             }}
-            QFrame#card {{
+            QFrame#controlsCard, QFrame#notesCard, QFrame#summaryCard, QFrame#detailCard {{
                 background: {PANEL};
                 border: 1px solid {BORDER};
                 border-radius: 18px;
@@ -478,12 +293,12 @@ class ThreadCalculatorWindow(QMainWindow):
             QPushButton:pressed {{
                 background: #1A222D;
             }}
-            QPushButton#accentButton {{
+            QPushButton#calculateButton {{
                 background: {ACCENT};
                 color: #08111E;
                 border: 1px solid {ACCENT};
             }}
-            QPushButton#accentButton:hover {{
+            QPushButton#calculateButton:hover {{
                 background: #7AB9FF;
             }}
             QLabel#inlineStatus {{
@@ -493,7 +308,8 @@ class ThreadCalculatorWindow(QMainWindow):
                 padding: 12px 14px;
                 color: {MUTED};
             }}
-            QFrame#resultRow {{
+            QFrame#standardTapDrillRow, QFrame#printHoleRow, QFrame#theoreticalBoltRow,
+            QFrame#printBoltRow, QFrame#layerRangeRow {{
                 background: {PANEL_ALT};
                 border: 1px solid {BORDER};
                 border-radius: 16px;
@@ -513,7 +329,7 @@ class ThreadCalculatorWindow(QMainWindow):
                 color: {MUTED};
                 padding-top: 6px;
             }}
-            QFrame#metricTile {{
+            QFrame#summaryStandardTile, QFrame#summaryInputTile, QFrame#summaryUnitsTile, QFrame#summaryClearanceTile {{
                 background: {PANEL_ALT};
                 border: 1px solid {BORDER};
                 border-radius: 16px;
@@ -543,10 +359,6 @@ class ThreadCalculatorWindow(QMainWindow):
             }}
             QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {{
                 height: 0;
-            }}
-                min-height: 210px;
-                padding: 12px;
-                line-height: 1.45;
             }}
             QStatusBar {{
                 background: {PANEL};
