@@ -17,6 +17,8 @@ from PySide6.QtWidgets import (
     QLineEdit,
     QMainWindow,
     QPushButton,
+    QScrollArea,
+    QSizePolicy,
     QStatusBar,
     QTextEdit,
     QVBoxLayout,
@@ -82,6 +84,7 @@ class LabeledInput(QWidget):
         self.helper.setObjectName("fieldHelper")
         self.helper.setWordWrap(True)
         self.input = QLineEdit()
+        self.input.setMinimumHeight(46)
         self.input.setClearButtonEnabled(True)
 
         layout = QVBoxLayout(self)
@@ -106,6 +109,7 @@ class ResultRow(QFrame):
         self.value_label = QLabel("—")
         self.value_label.setObjectName("resultValue")
         self.value_label.setTextInteractionFlags(Qt.TextSelectableByMouse)
+        self.setMinimumHeight(118)
         self.detail_label = QLabel("Awaiting valid inputs")
         self.detail_label.setObjectName("resultDetail")
         self.detail_label.setWordWrap(True)
@@ -127,6 +131,8 @@ class ThreadCalculatorWindow(QMainWindow):
     def __init__(self) -> None:
         super().__init__()
         self.setWindowTitle(APP_TITLE)
+        self.resize(1360, 920)
+        self.setMinimumSize(1180, 820)
         self.resize(1180, 760)
         self.setMinimumSize(1024, 680)
 
@@ -143,6 +149,13 @@ class ThreadCalculatorWindow(QMainWindow):
         self.recalculate(show_success=False)
 
     def _build_ui(self) -> None:
+        scroll_area = QScrollArea()
+        scroll_area.setWidgetResizable(True)
+        scroll_area.setFrameShape(QFrame.NoFrame)
+        scroll_area.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+
+        container = QWidget()
+        container.setObjectName("canvas")
         container = QWidget()
         outer_layout = QVBoxLayout(container)
         outer_layout.setContentsMargins(24, 24, 24, 24)
@@ -152,10 +165,13 @@ class ThreadCalculatorWindow(QMainWindow):
 
         content_layout = QHBoxLayout()
         content_layout.setSpacing(18)
+        content_layout.setAlignment(Qt.AlignTop)
         content_layout.addWidget(self._build_left_column(), 5)
         content_layout.addWidget(self._build_right_column(), 6)
         outer_layout.addLayout(content_layout, 1)
 
+        scroll_area.setWidget(container)
+        self.setCentralWidget(scroll_area)
         self.setCentralWidget(container)
         self.setStatusBar(self._build_status_bar())
         self._build_actions()
@@ -179,6 +195,7 @@ class ThreadCalculatorWindow(QMainWindow):
 
     def _build_left_column(self) -> QWidget:
         column = QWidget()
+        column.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Maximum)
         layout = QVBoxLayout(column)
         layout.setContentsMargins(0, 0, 0, 0)
         layout.setSpacing(18)
@@ -195,6 +212,7 @@ class ThreadCalculatorWindow(QMainWindow):
         standard_label = QLabel("Thread standard")
         standard_label.setObjectName("fieldLabel")
         self.standard_combo = QComboBox()
+        self.standard_combo.setMinimumHeight(46)
         self.standard_combo.addItems([ThreadStandard.METRIC.value, ThreadStandard.SAE.value])
         standard_helper = QLabel("Metric uses diameter + pitch. SAE uses diameter + threads per inch.")
         standard_helper.setObjectName("fieldHelper")
@@ -210,6 +228,7 @@ class ThreadCalculatorWindow(QMainWindow):
         preset_label = QLabel("Quick presets")
         preset_label.setObjectName("fieldLabel")
         self.preset_combo = QComboBox()
+        self.preset_combo.setMinimumHeight(46)
         self.preset_combo.addItem("Custom")
         for preset in COMMON_PRESETS:
             self.preset_combo.addItem(preset.name, preset)
@@ -240,6 +259,12 @@ class ThreadCalculatorWindow(QMainWindow):
         button_row = QHBoxLayout()
         button_row.setSpacing(10)
         self.calculate_button = QPushButton("Calculate")
+        self.calculate_button.setMinimumWidth(132)
+        self.calculate_button.setObjectName("accentButton")
+        self.reset_button = QPushButton("Reset")
+        self.reset_button.setMinimumWidth(92)
+        self.copy_button = QPushButton("Copy results")
+        self.copy_button.setMinimumWidth(132)
         self.calculate_button.setObjectName("accentButton")
         self.reset_button = QPushButton("Reset")
         self.copy_button = QPushButton("Copy results")
@@ -269,12 +294,18 @@ class ThreadCalculatorWindow(QMainWindow):
         )
         notes_card.content_layout.addWidget(notes)
 
+        controls_card.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Maximum)
+        notes_card.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Maximum)
+        layout.addWidget(controls_card)
+        layout.addWidget(notes_card)
+        layout.addStretch(1)
         layout.addWidget(controls_card)
         layout.addWidget(notes_card, 1)
         return column
 
     def _build_right_column(self) -> QWidget:
         column = QWidget()
+        column.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Maximum)
         layout = QVBoxLayout(column)
         layout.setContentsMargins(0, 0, 0, 0)
         layout.setSpacing(18)
@@ -312,6 +343,11 @@ class ThreadCalculatorWindow(QMainWindow):
 
         detail_card.content_layout.addLayout(detail_grid)
 
+        summary_card.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Maximum)
+        detail_card.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Maximum)
+        layout.addWidget(summary_card)
+        layout.addWidget(detail_card)
+        layout.addStretch(1)
         layout.addWidget(summary_card, 3)
         layout.addWidget(detail_card, 2)
         return column
@@ -328,6 +364,7 @@ class ThreadCalculatorWindow(QMainWindow):
         value_label = QLabel(value)
         value_label.setObjectName("metricTileValue")
 
+        tile.setMinimumHeight(112)
         tile_layout.addWidget(title_label)
         tile_layout.addWidget(value_label)
         tile.value_label = value_label  # type: ignore[attr-defined]
@@ -365,6 +402,9 @@ class ThreadCalculatorWindow(QMainWindow):
                 background: {BACKGROUND};
                 color: {TEXT};
             }}
+            QWidget#canvas {{
+                background: {BACKGROUND};
+            }}
             QMainWindow {{
                 background: {BACKGROUND};
             }}
@@ -399,6 +439,7 @@ class ThreadCalculatorWindow(QMainWindow):
                 background: {PANEL_ALT};
                 border: 1px solid {BORDER};
                 border-radius: 12px;
+                min-height: 46px;
                 padding: 10px 12px;
                 selection-background-color: {ACCENT};
                 selection-color: #09111E;
@@ -426,6 +467,7 @@ class ThreadCalculatorWindow(QMainWindow):
                 background: {PANEL_ALT};
                 border: 1px solid {BORDER};
                 border-radius: 12px;
+                min-height: 44px;
                 padding: 10px 16px;
                 font-weight: 600;
             }}
@@ -455,6 +497,7 @@ class ThreadCalculatorWindow(QMainWindow):
                 background: {PANEL_ALT};
                 border: 1px solid {BORDER};
                 border-radius: 16px;
+                min-height: 118px;
             }}
             QLabel#resultTitle {{
                 font-size: 12px;
@@ -480,6 +523,27 @@ class ThreadCalculatorWindow(QMainWindow):
                 font-weight: 700;
             }}
             QTextEdit#notesBox {{
+                min-height: 260px;
+                padding: 12px;
+                line-height: 1.45;
+            }}
+            QScrollArea {{
+                border: none;
+            }}
+            QScrollBar:vertical {{
+                background: {PANEL};
+                width: 12px;
+                margin: 6px;
+                border-radius: 6px;
+            }}
+            QScrollBar::handle:vertical {{
+                background: #334156;
+                min-height: 36px;
+                border-radius: 6px;
+            }}
+            QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {{
+                height: 0;
+            }}
                 min-height: 210px;
                 padding: 12px;
                 line-height: 1.45;
