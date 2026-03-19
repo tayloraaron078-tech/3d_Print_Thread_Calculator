@@ -1,6 +1,6 @@
 import unittest
 
-from thread_calculator import calculate_thread_values
+from thread_calculator import calculate_thread_values, parse_thread_inputs
 
 
 class ThreadCalculatorTests(unittest.TestCase):
@@ -18,9 +18,19 @@ class ThreadCalculatorTests(unittest.TestCase):
         self.assertAlmostEqual(values.print_hole, 15.89367, places=5)
         self.assertAlmostEqual(values.print_bolt, 17.65, places=6)
 
+    def test_sae_quarter_20_values(self):
+        parsed = parse_thread_inputs("SAE", 0.25, 20)
+        values = calculate_thread_values(parsed.diameter, parsed.pitch)
+        self.assertAlmostEqual(parsed.pitch, 1.27, places=6)
+        self.assertAlmostEqual(values.standard_tap_drill * parsed.display_scale, 0.2018734, places=6)
+        self.assertAlmostEqual(values.print_hole * parsed.display_scale, 0.2097474, places=6)
+        self.assertAlmostEqual(values.print_bolt * parsed.display_scale, 0.2421260, places=6)
+
     def test_invalid(self):
         with self.assertRaises(ValueError):
             calculate_thread_values(0, 1.0)
+        with self.assertRaises(ValueError):
+            parse_thread_inputs("metric", 8.0, 0)
 
 
 if __name__ == "__main__":
