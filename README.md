@@ -36,3 +36,9 @@ python3 -m unittest discover -s tests
 ## Packaging note
 
 The app is structured to work cleanly with tools such as PyInstaller later, because the business logic is separated from the user interface and the launcher has a single entry point.
+
+## Notes
+License: Redeemed 3D Non-Commercial License (R3D-NC)
+
+Free for personal use.  
+Commercial use requires permission.
