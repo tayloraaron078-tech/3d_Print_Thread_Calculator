@@ -1,5 +1,5 @@
-('C:\\Users\\prsda\\Documents\\GitHub\\Redeemed_3D_Thread_Calculator\\build\\Redeemed '
- 'Thread Calculator\\Redeemed Thread Calculator.pkg',
+('C:\\Users\\prsda\\Documents\\GitHub\\3d_Print_Thread_Calculator-main\\build\\Redeemed_3D '
+ 'Thread Calculator\\Redeemed_3D Thread Calculator.pkg',
  {'BINARY': True,
   'DATA': True,
   'EXECUTABLE': True,
@@ -11,27 +11,27 @@
   'SYMLINK': False},
  [('pyi-contents-directory _internal', '', 'OPTION'),
   ('PYZ-00.pyz',
-   'C:\\Users\\prsda\\Documents\\GitHub\\Redeemed_3D_Thread_Calculator\\build\\Redeemed '
+   'C:\\Users\\prsda\\Documents\\GitHub\\3d_Print_Thread_Calculator-main\\build\\Redeemed_3D '
    'Thread Calculator\\PYZ-00.pyz',
    'PYZ'),
   ('struct',
-   'C:\\Users\\prsda\\Documents\\GitHub\\Redeemed_3D_Thread_Calculator\\build\\Redeemed '
+   'C:\\Users\\prsda\\Documents\\GitHub\\3d_Print_Thread_Calculator-main\\build\\Redeemed_3D '
    'Thread Calculator\\localpycs\\struct.pyc',
    'PYMODULE'),
   ('pyimod01_archive',
-   'C:\\Users\\prsda\\Documents\\GitHub\\Redeemed_3D_Thread_Calculator\\build\\Redeemed '
+   'C:\\Users\\prsda\\Documents\\GitHub\\3d_Print_Thread_Calculator-main\\build\\Redeemed_3D '
    'Thread Calculator\\localpycs\\pyimod01_archive.pyc',
    'PYMODULE'),
   ('pyimod02_importers',
-   'C:\\Users\\prsda\\Documents\\GitHub\\Redeemed_3D_Thread_Calculator\\build\\Redeemed '
+   'C:\\Users\\prsda\\Documents\\GitHub\\3d_Print_Thread_Calculator-main\\build\\Redeemed_3D '
    'Thread Calculator\\localpycs\\pyimod02_importers.pyc',
    'PYMODULE'),
   ('pyimod03_ctypes',
-   'C:\\Users\\prsda\\Documents\\GitHub\\Redeemed_3D_Thread_Calculator\\build\\Redeemed '
+   'C:\\Users\\prsda\\Documents\\GitHub\\3d_Print_Thread_Calculator-main\\build\\Redeemed_3D '
    'Thread Calculator\\localpycs\\pyimod03_ctypes.pyc',
    'PYMODULE'),
   ('pyimod04_pywin32',
-   'C:\\Users\\prsda\\Documents\\GitHub\\Redeemed_3D_Thread_Calculator\\build\\Redeemed '
+   'C:\\Users\\prsda\\Documents\\GitHub\\3d_Print_Thread_Calculator-main\\build\\Redeemed_3D '
    'Thread Calculator\\localpycs\\pyimod04_pywin32.pyc',
    'PYMODULE'),
   ('pyiboot01_bootstrap',
@@ -44,7 +44,7 @@
    'C:\\Users\\prsda\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks\\rthooks\\pyi_rth_pyside6.py',
    'PYSOURCE'),
   ('thread_calculator',
-   'C:\\Users\\prsda\\Documents\\GitHub\\Redeemed_3D_Thread_Calculator\\thread_calculator.py',
+   'C:\\Users\\prsda\\Documents\\GitHub\\3d_Print_Thread_Calculator-main\\thread_calculator.py',
    'PYSOURCE')],
  'python314.dll',
  True,

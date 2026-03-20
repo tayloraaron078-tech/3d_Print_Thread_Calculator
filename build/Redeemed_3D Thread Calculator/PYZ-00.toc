@@ -1,4 +1,4 @@
-('C:\\Users\\prsda\\Documents\\GitHub\\Redeemed_3D_Thread_Calculator\\build\\Redeemed '
+('C:\\Users\\prsda\\Documents\\GitHub\\3d_Print_Thread_Calculator-main\\build\\Redeemed_3D '
  'Thread Calculator\\PYZ-00.pyz',
  [('PySide6',
    'C:\\Users\\prsda\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PySide6\\__init__.py',
@@ -370,7 +370,7 @@
    'C:\\Users\\prsda\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\textwrap.py',
    'PYMODULE'),
   ('thread_logic',
-   'C:\\Users\\prsda\\Documents\\GitHub\\Redeemed_3D_Thread_Calculator\\thread_logic.py',
+   'C:\\Users\\prsda\\Documents\\GitHub\\3d_Print_Thread_Calculator-main\\thread_logic.py',
    'PYMODULE'),
   ('threading',
    'C:\\Users\\prsda\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\threading.py',

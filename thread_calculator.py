@@ -27,7 +27,7 @@ from PySide6.QtWidgets import (
 
 from thread_logic import COMMON_PRESETS, ThreadCalculation, ThreadInput, ThreadStandard, calculate_thread_values, parse_thread_inputs
 
-APP_TITLE = "Redeemed Thread Calculator"
+APP_TITLE = "Redeemed_3D FDM Thread Calculator"
 APP_SUBTITLE = "Premium-fit sizing guidance for 3D printed metric and unified threads."
 ACCENT = "#5AA9FF"
 BACKGROUND = "#10141C"
@@ -760,7 +760,7 @@ class ThreadCalculatorWindow(QMainWindow):
 def main() -> int:
     app = QApplication(sys.argv)
     app.setApplicationName(APP_TITLE)
-    app.setOrganizationName("Redeemed Engineering")
+    app.setOrganizationName("Redeemed_3D")
     window = ThreadCalculatorWindow()
     window.show()
     return app.exec()
