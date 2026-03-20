@@ -1,0 +1,1 @@
+pyinstaller --onedir --windowed --name "Redeemed Thread Calculator" --icon=Redeemed_Color.ico thread_calculator.py

@@ -1,6 +1,6 @@
 import unittest
 
-from thread_calculator import calculate_thread_values, parse_thread_inputs
+from thread_logic import COMMON_PRESETS, ThreadStandard, calculate_thread_values, parse_thread_inputs
 
 
 class ThreadCalculatorTests(unittest.TestCase):
@@ -31,6 +31,14 @@ class ThreadCalculatorTests(unittest.TestCase):
             calculate_thread_values(0, 1.0)
         with self.assertRaises(ValueError):
             parse_thread_inputs("metric", 8.0, 0)
+
+    def test_common_presets_cover_requested_sizes(self):
+        preset_names = {preset.name: preset.standard for preset in COMMON_PRESETS}
+        self.assertEqual(preset_names["M5 × 0.8"], ThreadStandard.METRIC)
+        self.assertEqual(preset_names["M6 × 1.0"], ThreadStandard.METRIC)
+        self.assertEqual(preset_names["M8 × 1.25"], ThreadStandard.METRIC)
+        self.assertEqual(preset_names["1/4-20 UNC"], ThreadStandard.SAE)
+        self.assertEqual(preset_names["3/8-16 UNC"], ThreadStandard.SAE)
 
 
 if __name__ == "__main__":

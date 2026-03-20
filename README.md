@@ -1,13 +1,25 @@
-# Redeemed_3D Printed Threads Calculator (Python)
+# Redeemed Thread Calculator
 
-A small Python app that reproduces the same thread-calculation logic from the provided HTML/JavaScript example, now with both **Metric** and **SAE** support.
+A polished PySide6 desktop utility for sizing 3D printed metric and SAE threads. The calculation logic remains isolated from the Qt user interface so the app stays easy to test, maintain, and package.
 
-## Features
+## File structure
 
-- Metric mode: diameter + pitch inputs.
-- SAE mode: diameter (inches) + TPI input.
-- Dropdown to switch thread standard.
-- Enlarged fixed-size window so all sections remain visible after calculations.
+- `thread_calculator.py` — PySide6 `QMainWindow` application entry point, custom widgets, layout composition, and dark-theme styling.
+- `thread_logic.py` — reusable thread parsing, calculation logic, and shared presets.
+- `thread_calculator.pyw` — double-click friendly launcher for Windows environments.
+- `tests/test_thread_calculator.py` — unit tests covering the calculation layer and shared presets.
+
+## Requirements
+
+```bash
+pip install -r requirements.txt
+```
+
+### `requirements.txt`
+
+```text
+PySide6>=6.7,<7
+```
 
 ## Run the app
 
@@ -20,3 +32,7 @@ python3 thread_calculator.py
 ```bash
 python3 -m unittest discover -s tests
 ```
+
+## Packaging note
+
+The app is structured to work cleanly with tools such as PyInstaller later, because the business logic is separated from the user interface and the launcher has a single entry point.
