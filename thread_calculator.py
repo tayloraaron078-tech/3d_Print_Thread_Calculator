@@ -93,12 +93,10 @@ class ThreadCalculatorWindow(QMainWindow):
 
         loader = QUiLoader()
         loaded_window = loader.load(ui_file, self)
-        error_text = loader.errorString() if hasattr(loader, "errorString") else ""
         ui_file.close()
 
         if loaded_window is None:
-            detail = f": {error_text}" if error_text else ""
-            raise RuntimeError(f"Unable to load UI file: {UI_FILE}{detail}")
+            raise RuntimeError(f"Unable to load UI file: {UI_FILE}")
         if not isinstance(loaded_window, QMainWindow):
             raise RuntimeError(f"UI root must be a QMainWindow: {UI_FILE}")
 

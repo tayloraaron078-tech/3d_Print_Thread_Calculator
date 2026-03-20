@@ -21,17 +21,11 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="rootLayout">
-    <property name="leftMargin">
-     <number>0</number>
-    </property>
-    <property name="topMargin">
-     <number>0</number>
-    </property>
-    <property name="rightMargin">
-     <number>0</number>
-    </property>
-    <property name="bottomMargin">
-     <number>0</number>
+    <property name="contentsMargins">
+     <left>0</left>
+     <top>0</top>
+     <right>0</right>
+     <bottom>0</bottom>
     </property>
     <item>
      <widget class="QScrollArea" name="mainScrollArea">
@@ -49,17 +43,11 @@
         <property name="spacing">
          <number>18</number>
         </property>
-        <property name="leftMargin">
-         <number>24</number>
-        </property>
-        <property name="topMargin">
-         <number>24</number>
-        </property>
-        <property name="rightMargin">
-         <number>24</number>
-        </property>
-        <property name="bottomMargin">
-         <number>24</number>
+        <property name="contentsMargins">
+         <left>24</left>
+         <top>24</top>
+         <right>24</right>
+         <bottom>24</bottom>
         </property>
         <item>
          <widget class="QFrame" name="header">
@@ -67,17 +55,11 @@
            <property name="spacing">
             <number>6</number>
            </property>
-           <property name="leftMargin">
-            <number>24</number>
-           </property>
-           <property name="topMargin">
-            <number>22</number>
-           </property>
-           <property name="rightMargin">
-            <number>24</number>
-           </property>
-           <property name="bottomMargin">
-            <number>22</number>
+           <property name="contentsMargins">
+            <left>24</left>
+            <top>22</top>
+            <right>24</right>
+            <bottom>22</bottom>
            </property>
            <item>
             <widget class="QLabel" name="appTitle">
@@ -116,17 +98,11 @@
              <property name="spacing">
               <number>18</number>
              </property>
-             <property name="leftMargin">
-              <number>0</number>
-             </property>
-             <property name="topMargin">
-              <number>0</number>
-             </property>
-             <property name="rightMargin">
-              <number>0</number>
-             </property>
-             <property name="bottomMargin">
-              <number>0</number>
+             <property name="contentsMargins">
+              <left>0</left>
+              <top>0</top>
+              <right>0</right>
+              <bottom>0</bottom>
              </property>
              <item>
               <widget class="QFrame" name="controlsCard">
@@ -134,17 +110,11 @@
                 <property name="spacing">
                  <number>16</number>
                 </property>
-                <property name="leftMargin">
-                 <number>20</number>
-                </property>
-                <property name="topMargin">
-                 <number>20</number>
-                </property>
-                <property name="rightMargin">
-                 <number>20</number>
-                </property>
-                <property name="bottomMargin">
-                 <number>20</number>
+                <property name="contentsMargins">
+                 <left>20</left>
+                 <top>20</top>
+                 <right>20</right>
+                 <bottom>20</bottom>
                 </property>
                 <item>
                  <layout class="QVBoxLayout" name="controlsHeaderLayout">
@@ -190,17 +160,11 @@
                      <property name="spacing">
                       <number>6</number>
                      </property>
-                     <property name="leftMargin">
-                      <number>0</number>
-                     </property>
-                     <property name="topMargin">
-                      <number>0</number>
-                     </property>
-                     <property name="rightMargin">
-                      <number>0</number>
-                     </property>
-                     <property name="bottomMargin">
-                      <number>0</number>
+                     <property name="contentsMargins">
+                      <left>0</left>
+                      <top>0</top>
+                      <right>0</right>
+                      <bottom>0</bottom>
                      </property>
                      <item>
                       <widget class="QLabel" name="standardLabel">
@@ -244,17 +208,11 @@
                      <property name="spacing">
                       <number>6</number>
                      </property>
-                     <property name="leftMargin">
-                      <number>0</number>
-                     </property>
-                     <property name="topMargin">
-                      <number>0</number>
-                     </property>
-                     <property name="rightMargin">
-                      <number>0</number>
-                     </property>
-                     <property name="bottomMargin">
-                      <number>0</number>
+                     <property name="contentsMargins">
+                      <left>0</left>
+                      <top>0</top>
+                      <right>0</right>
+                      <bottom>0</bottom>
                      </property>
                      <item>
                       <widget class="QLabel" name="presetLabel">
@@ -298,17 +256,11 @@
                      <property name="spacing">
                       <number>6</number>
                      </property>
-                     <property name="leftMargin">
-                      <number>0</number>
-                     </property>
-                     <property name="topMargin">
-                      <number>0</number>
-                     </property>
-                     <property name="rightMargin">
-                      <number>0</number>
-                     </property>
-                     <property name="bottomMargin">
-                      <number>0</number>
+                     <property name="contentsMargins">
+                      <left>0</left>
+                      <top>0</top>
+                      <right>0</right>
+                      <bottom>0</bottom>
                      </property>
                      <item>
                       <widget class="QLabel" name="diameterLabel">
@@ -355,17 +307,11 @@
                      <property name="spacing">
                       <number>6</number>
                      </property>
-                     <property name="leftMargin">
-                      <number>0</number>
-                     </property>
-                     <property name="topMargin">
-                      <number>0</number>
-                     </property>
-                     <property name="rightMargin">
-                      <number>0</number>
-                     </property>
-                     <property name="bottomMargin">
-                      <number>0</number>
+                     <property name="contentsMargins">
+                      <left>0</left>
+                      <top>0</top>
+                      <right>0</right>
+                      <bottom>0</bottom>
                      </property>
                      <item>
                       <widget class="QLabel" name="pitchLabel">
@@ -486,17 +432,11 @@
                 <property name="spacing">
                  <number>16</number>
                 </property>
-                <property name="leftMargin">
-                 <number>20</number>
-                </property>
-                <property name="topMargin">
-                 <number>20</number>
-                </property>
-                <property name="rightMargin">
-                 <number>20</number>
-                </property>
-                <property name="bottomMargin">
-                 <number>20</number>
+                <property name="contentsMargins">
+                 <left>20</left>
+                 <top>20</top>
+                 <right>20</right>
+                 <bottom>20</bottom>
                 </property>
                 <item>
                  <layout class="QVBoxLayout" name="notesHeaderLayout">
@@ -579,17 +519,11 @@ p, li { white-space: pre-wrap; }
              <property name="spacing">
               <number>18</number>
              </property>
-             <property name="leftMargin">
-              <number>0</number>
-             </property>
-             <property name="topMargin">
-              <number>0</number>
-             </property>
-             <property name="rightMargin">
-              <number>0</number>
-             </property>
-             <property name="bottomMargin">
-              <number>0</number>
+             <property name="contentsMargins">
+              <left>0</left>
+              <top>0</top>
+              <right>0</right>
+              <bottom>0</bottom>
              </property>
              <item>
               <widget class="QFrame" name="summaryCard">
@@ -597,17 +531,11 @@ p, li { white-space: pre-wrap; }
                 <property name="spacing">
                  <number>16</number>
                 </property>
-                <property name="leftMargin">
-                 <number>20</number>
-                </property>
-                <property name="topMargin">
-                 <number>20</number>
-                </property>
-                <property name="rightMargin">
-                 <number>20</number>
-                </property>
-                <property name="bottomMargin">
-                 <number>20</number>
+                <property name="contentsMargins">
+                 <left>20</left>
+                 <top>20</top>
+                 <right>20</right>
+                 <bottom>20</bottom>
                 </property>
                 <item>
                  <layout class="QVBoxLayout" name="summaryHeaderLayout">
@@ -651,17 +579,11 @@ p, li { white-space: pre-wrap; }
                    <property name="spacing">
                     <number>2</number>
                    </property>
-                   <property name="leftMargin">
-                    <number>18</number>
-                   </property>
-                   <property name="topMargin">
-                    <number>16</number>
-                   </property>
-                   <property name="rightMargin">
-                    <number>18</number>
-                   </property>
-                   <property name="bottomMargin">
-                    <number>16</number>
+                   <property name="contentsMargins">
+                    <left>18</left>
+                    <top>16</top>
+                    <right>18</right>
+                    <bottom>16</bottom>
                    </property>
                    <item>
                     <widget class="QLabel" name="titleLabel">
@@ -709,13 +631,7 @@ p, li { white-space: pre-wrap; }
                   </property>
                   <layout class="QVBoxLayout" name="printHoleRowLayout">
                    <property name="spacing"><number>2</number></property>
-                   <property name="leftMargin"><number>18</number></property>
-
-                   <property name="topMargin"><number>16</number></property>
-
-                   <property name="rightMargin"><number>18</number></property>
-
-                   <property name="bottomMargin"><number>16</number></property>
+                   <property name="contentsMargins"><left>18</left><top>16</top><right>18</right><bottom>16</bottom></property>
                    <item><widget class="QLabel" name="titleLabel"><property name="text"><string>3D print hole diameter</string></property><property name="objectName"><string>resultTitle</string></property></widget></item>
                    <item><widget class="QLabel" name="valueLabel"><property name="text"><string>—</string></property><property name="objectName"><string>resultValue</string></property><property name="textInteractionFlags"><set>Qt::TextSelectableByMouse</set></property></widget></item>
                    <item><widget class="QLabel" name="detailLabel"><property name="text"><string>Awaiting valid inputs</string></property><property name="wordWrap"><bool>true</bool></property><property name="objectName"><string>resultDetail</string></property></widget></item>
@@ -727,13 +643,7 @@ p, li { white-space: pre-wrap; }
                   <property name="minimumSize"><size><width>0</width><height>118</height></size></property>
                   <layout class="QVBoxLayout" name="theoreticalBoltRowLayout">
                    <property name="spacing"><number>2</number></property>
-                   <property name="leftMargin"><number>18</number></property>
-
-                   <property name="topMargin"><number>16</number></property>
-
-                   <property name="rightMargin"><number>18</number></property>
-
-                   <property name="bottomMargin"><number>16</number></property>
+                   <property name="contentsMargins"><left>18</left><top>16</top><right>18</right><bottom>16</bottom></property>
                    <item><widget class="QLabel" name="titleLabel"><property name="text"><string>Theoretical bolt major diameter</string></property><property name="objectName"><string>resultTitle</string></property></widget></item>
                    <item><widget class="QLabel" name="valueLabel"><property name="text"><string>—</string></property><property name="objectName"><string>resultValue</string></property><property name="textInteractionFlags"><set>Qt::TextSelectableByMouse</set></property></widget></item>
                    <item><widget class="QLabel" name="detailLabel"><property name="text"><string>Awaiting valid inputs</string></property><property name="wordWrap"><bool>true</bool></property><property name="objectName"><string>resultDetail</string></property></widget></item>
@@ -745,13 +655,7 @@ p, li { white-space: pre-wrap; }
                   <property name="minimumSize"><size><width>0</width><height>118</height></size></property>
                   <layout class="QVBoxLayout" name="printBoltRowLayout">
                    <property name="spacing"><number>2</number></property>
-                   <property name="leftMargin"><number>18</number></property>
-
-                   <property name="topMargin"><number>16</number></property>
-
-                   <property name="rightMargin"><number>18</number></property>
-
-                   <property name="bottomMargin"><number>16</number></property>
+                   <property name="contentsMargins"><left>18</left><top>16</top><right>18</right><bottom>16</bottom></property>
                    <item><widget class="QLabel" name="titleLabel"><property name="text"><string>Recommended print bolt diameter</string></property><property name="objectName"><string>resultTitle</string></property></widget></item>
                    <item><widget class="QLabel" name="valueLabel"><property name="text"><string>—</string></property><property name="objectName"><string>resultValue</string></property><property name="textInteractionFlags"><set>Qt::TextSelectableByMouse</set></property></widget></item>
                    <item><widget class="QLabel" name="detailLabel"><property name="text"><string>Awaiting valid inputs</string></property><property name="wordWrap"><bool>true</bool></property><property name="objectName"><string>resultDetail</string></property></widget></item>
@@ -763,13 +667,7 @@ p, li { white-space: pre-wrap; }
                   <property name="minimumSize"><size><width>0</width><height>118</height></size></property>
                   <layout class="QVBoxLayout" name="layerRangeRowLayout">
                    <property name="spacing"><number>2</number></property>
-                   <property name="leftMargin"><number>18</number></property>
-
-                   <property name="topMargin"><number>16</number></property>
-
-                   <property name="rightMargin"><number>18</number></property>
-
-                   <property name="bottomMargin"><number>16</number></property>
+                   <property name="contentsMargins"><left>18</left><top>16</top><right>18</right><bottom>16</bottom></property>
                    <item><widget class="QLabel" name="titleLabel"><property name="text"><string>Suggested layer height range</string></property><property name="objectName"><string>resultTitle</string></property></widget></item>
                    <item><widget class="QLabel" name="valueLabel"><property name="text"><string>—</string></property><property name="objectName"><string>resultValue</string></property><property name="textInteractionFlags"><set>Qt::TextSelectableByMouse</set></property></widget></item>
                    <item><widget class="QLabel" name="detailLabel"><property name="text"><string>Awaiting valid inputs</string></property><property name="wordWrap"><bool>true</bool></property><property name="objectName"><string>resultDetail</string></property></widget></item>
@@ -795,17 +693,11 @@ p, li { white-space: pre-wrap; }
                 <property name="spacing">
                  <number>16</number>
                 </property>
-                <property name="leftMargin">
-                 <number>20</number>
-                </property>
-                <property name="topMargin">
-                 <number>20</number>
-                </property>
-                <property name="rightMargin">
-                 <number>20</number>
-                </property>
-                <property name="bottomMargin">
-                 <number>20</number>
+                <property name="contentsMargins">
+                 <left>20</left>
+                 <top>20</top>
+                 <right>20</right>
+                 <bottom>20</bottom>
                 </property>
                 <item>
                  <layout class="QVBoxLayout" name="detailHeaderLayout">
@@ -850,13 +742,7 @@ p, li { white-space: pre-wrap; }
                     <property name="minimumSize"><size><width>0</width><height>112</height></size></property>
                     <layout class="QVBoxLayout" name="summaryStandardTileLayout">
                      <property name="spacing"><number>4</number></property>
-                     <property name="leftMargin"><number>16</number></property>
-
-                     <property name="topMargin"><number>16</number></property>
-
-                     <property name="rightMargin"><number>16</number></property>
-
-                     <property name="bottomMargin"><number>16</number></property>
+                     <property name="contentsMargins"><left>16</left><top>16</top><right>16</right><bottom>16</bottom></property>
                      <item><widget class="QLabel" name="titleLabel"><property name="text"><string>Current standard</string></property><property name="objectName"><string>metricTileTitle</string></property></widget></item>
                      <item><widget class="QLabel" name="valueLabel"><property name="text"><string>Metric</string></property><property name="objectName"><string>metricTileValue</string></property></widget></item>
                     </layout>
@@ -867,13 +753,7 @@ p, li { white-space: pre-wrap; }
                     <property name="minimumSize"><size><width>0</width><height>112</height></size></property>
                     <layout class="QVBoxLayout" name="summaryInputTileLayout">
                      <property name="spacing"><number>4</number></property>
-                     <property name="leftMargin"><number>16</number></property>
-
-                     <property name="topMargin"><number>16</number></property>
-
-                     <property name="rightMargin"><number>16</number></property>
-
-                     <property name="bottomMargin"><number>16</number></property>
+                     <property name="contentsMargins"><left>16</left><top>16</top><right>16</right><bottom>16</bottom></property>
                      <item><widget class="QLabel" name="titleLabel"><property name="text"><string>Input size</string></property><property name="objectName"><string>metricTileTitle</string></property></widget></item>
                      <item><widget class="QLabel" name="valueLabel"><property name="text"><string>M8 × 1.25</string></property><property name="objectName"><string>metricTileValue</string></property></widget></item>
                     </layout>
@@ -884,13 +764,7 @@ p, li { white-space: pre-wrap; }
                     <property name="minimumSize"><size><width>0</width><height>112</height></size></property>
                     <layout class="QVBoxLayout" name="summaryUnitsTileLayout">
                      <property name="spacing"><number>4</number></property>
-                     <property name="leftMargin"><number>16</number></property>
-
-                     <property name="topMargin"><number>16</number></property>
-
-                     <property name="rightMargin"><number>16</number></property>
-
-                     <property name="bottomMargin"><number>16</number></property>
+                     <property name="contentsMargins"><left>16</left><top>16</top><right>16</right><bottom>16</bottom></property>
                      <item><widget class="QLabel" name="titleLabel"><property name="text"><string>Output units</string></property><property name="objectName"><string>metricTileTitle</string></property></widget></item>
                      <item><widget class="QLabel" name="valueLabel"><property name="text"><string>mm</string></property><property name="objectName"><string>metricTileValue</string></property></widget></item>
                     </layout>
@@ -901,13 +775,7 @@ p, li { white-space: pre-wrap; }
                     <property name="minimumSize"><size><width>0</width><height>112</height></size></property>
                     <layout class="QVBoxLayout" name="summaryClearanceTileLayout">
                      <property name="spacing"><number>4</number></property>
-                     <property name="leftMargin"><number>16</number></property>
-
-                     <property name="topMargin"><number>16</number></property>
-
-                     <property name="rightMargin"><number>16</number></property>
-
-                     <property name="bottomMargin"><number>16</number></property>
+                     <property name="contentsMargins"><left>16</left><top>16</top><right>16</right><bottom>16</bottom></property>
                      <item><widget class="QLabel" name="titleLabel"><property name="text"><string>Thread fit note</string></property><property name="objectName"><string>metricTileTitle</string></property></widget></item>
                      <item><widget class="QLabel" name="valueLabel"><property name="text"><string>Balanced</string></property><property name="objectName"><string>metricTileValue</string></property></widget></item>
                     </layout>
